@@ -1,0 +1,10 @@
+#+OPTIONS: toc:nil ^:nil
+#+TITLE: ubuntu12.04镜像
+
+* 键盘布局
+
+* 语言
+
+* hack bugs
+
+* 禁止无用的服务

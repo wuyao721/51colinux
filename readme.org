@@ -1,0 +1,4 @@
+#+OPTIONS: toc:nil ^:nil
+#+TITLE: 51colinux
+
+吴遥的colinux
