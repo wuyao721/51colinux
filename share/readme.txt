@@ -1,0 +1,1 @@
+colinux host操作系统与guest操作系统的共享目录。
