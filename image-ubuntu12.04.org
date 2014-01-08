@@ -1,6 +1,6 @@
 #+OPTIONS: toc:nil ^:nil
-#+TITLE: ubuntu12.04镜像
 
+* ubuntu12.04镜像
 本镜像来自于 [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux官网]] ，并对其进行裁剪、优化、修复。
 
 本镜像特性包括：

@@ -1,5 +1,4 @@
 #+OPTIONS: toc:nil ^:nil
-#+TITLE: 51colinux
 
 吴遥的colinux，特性包括：
  - 无须安装，拷贝即可使用，放在U盘便是可移动的linux
