@@ -3,6 +3,8 @@
 * ubuntu12.04镜像
 本镜像来自于 [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux官网]] ，并对其进行裁剪、优化、修复。
 
+镜像文件超过4G（超过一点点），所以不支持FAT32的文件系统，支持fatext或ntfs文件系统。
+
 本镜像特性包括：
  1. 去除桌面环境
  2. 软件包更新到最新（至2014.1.1）
