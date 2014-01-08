@@ -1,4 +1,11 @@
 #+OPTIONS: toc:nil ^:nil
 #+TITLE: 51colinux
 
-吴遥的colinux
+吴遥的colinux，特性包括：
+ - 无须安装，拷贝即可使用，放在U盘便是可移动的linux
+ - 快速启动（PC磁盘10秒、2.0U盘15秒）
+ - 两种启动方式：
+   1. 服务启动，开机即运行
+   2. 应用方式启动，最小化到托盘
+ - 自带一个优化过的ubuntu 12.04镜像（参考文件 [[file:../image-ubuntu12.04.org]] ）
+

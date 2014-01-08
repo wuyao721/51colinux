@@ -1,10 +1,59 @@
 #+OPTIONS: toc:nil ^:nil
 #+TITLE: ubuntu12.04镜像
 
-* 键盘布局
+本镜像来自于 [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux官网]] ，并对其进行裁剪、优化、修复。
 
-* 语言
+本镜像特性包括：
+ 1. 去除桌面环境
+ 2. 软件包更新到最新（至2014.1.1）
+ 3. 通用的使用环境设置（官网的环境有问题）
+ 4. upstart优化（禁用一些无用的服务，4级runlevel）
+ 5. 修复若干个BUG
+ 6. 安装常见的工具（vim、emacs等）
 
-* hack bugs
+具体实现请看下面详情。
 
-* 禁止无用的服务
+* 去除桌面环境
+既然选择了windows+colinux，那么linux桌面就显得无关紧要了。卸载有多个好处：
+ 1. 节省空间，至少300M
+ 2. 系统更稳定
+ 3. 部署方便（windows不用装XMing）
+
+卸载的内容包括Gnome、Kde、Gtk、Qt、Xorg、Xlib软件包，通过手工卸载，类似这样：
+: dpkg -l|grep gnome
+: apt-get purge *gnome*
+
+* 软件包更新到最新
+: apt-get update
+: apt-get upgrade
+
+* 通用的环境设置
+官网镜像问题好多，首先是tty键盘布局，有点奇怪，z和y调过来，还有很多都乱了。重新设置一下就好了：
+: root@ubuntu:~# dpkg-reconfigure keyboard-configuration
+
+然后就是语言包，支持一下中文：
+: root@ubuntu:~# locale-gen --lang zh_CN.UTF-8
+
+然后就是语言环境，选用 *en_US.UTF-8* ，比较通用。
+: root@ubuntu:~# cat /etc/default/locale
+: LANG="en_US.UTF-8"
+: LANGUAGE="en_US:en"
+: root@ubuntu:~# cat /var/lib/locales/supported.d/local
+: en_US.UTF-8 UTF-8
+: zh_CN.UTF-8 UTF-8
+
+* upstart优化
+设置runlevel为4，修改文件 */etc/inittab* 即可。
+
+* 修复若干个BUG
+发现的bug有：
+ - 重启后文件 */dev/ptmx* 丢失
+ - 无法在 */etc/fstab* 加载 windows文件系统，得手工加载
+
+修复脚本写在 */etc/rc.local* 开机启动脚本里。
+
+* 安装常见的工具
+安装的软件包包括：
+ - emacs23-nox
+ - vim
+ - subverion
