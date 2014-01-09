@@ -5,19 +5,20 @@
 
 镜像文件超过4G（超过一点点），所以不支持FAT32的文件系统，支持fatext或ntfs文件系统。
 
-root默认密码为： *wuyao*
+root默认密码为： *51colinux*
 
 支持系统：
  - Windows XP
+
 
 * 镜像特性
 本镜像特性包括：
  1. 去除桌面环境
  2. 软件包更新到最新（至2014.1.8）
- 3. 通用的使用环境设置（官网的环境有问题）
+ 3. 通用的使用环境设置
  4. upstart优化（禁用一些无用的服务，4级runlevel）
  5. 修复若干个BUG
- 6. 安装常见的工具（vim、emacs等）
+ 6. 安装常用工具
  7. 与宿主系统共享目录
 
 具体实现请看下面详情。
@@ -52,6 +53,9 @@ root默认密码为： *wuyao*
 : LANG="en_US.UTF-8"
 : LANGUAGE="en_US:en"
 
+使用上海时区：
+: cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 
 ** upstart优化
 设置runlevel为4，修改文件 */etc/inittab* 即可。
@@ -65,17 +69,17 @@ root默认密码为： *wuyao*
 修复脚本写在 */etc/rc.local* 开机启动脚本里。
 
 
-* 与宿主系统共享目录
-共享目录在宿主系统里是安装目录下的 *share* ；在镜像系统下的是 */root/windows* ，它是 */mnt/win* 的软连接。
-
-
-** 安装常见的工具
+** 安装常用工具
 安装的软件包包括：
- - emacs23-nox
- - vim
- - subverion
+ - emacs23-nox, vim
  - apt-file
- - gcc, g++, make等开发工具
+ - gcc, g++, make, subverion, git等开发工具
+ - nmap
+ - unrar, unzip （windows常见的压缩方式）
+
+
+** 与宿主系统共享目录
+共享目录在宿主系统里是安装目录下的 *share* ；在镜像系统下的是 */root/windows* ，它是 */mnt/win* 的软连接。
 
 
 ** 修改文件列表
@@ -87,3 +91,4 @@ root默认密码为： *wuyao*
  - /etc/inittab
  - /etc/default/locale
  - /etc/issue
+
