@@ -1,6 +1,6 @@
 #+OPTIONS: toc:nil ^:nil
 
-* 吴遥的colinux
+* 51colinux
 引用自百度百科对colinux的介绍：
  *CoLinux（Cooperative Linux 的缩写）是第一种免费使用和开源的解决方案，它让Linux更好的运行在Microsoft Windows 本机系统下。通常的， colinux是Linux内核使自己友好的和其它操作系统共同运行在一台机器上的一条通道。例如，我们不需要第三方的商业虚拟机软件（例如vmware）就可以自由的在windows 2000/xp/vista/7上运行Linux，这是不使用虚拟机软件的最佳方式。*
 
@@ -15,6 +15,12 @@
  - 提供无镜像启动配置 
  - 提供一个优化过的ubuntu 12.04镜像
 
+支持操作系统：
+ - Windows XP 32bit
+ - Windows 7 32bit
+
+其它的系统没有测试过。
+
 
 * 使用简介
 
@@ -27,11 +33,11 @@
 ** ubuntu12.04镜像启动
 本项目目前只提供 ubuntu12.04镜像， 使用顺序如下：
  1. 下载ubuntu 12.04 镜像文件 *ubuntu-12.04.vdi* 到 *images* 目录下
- 2. 将配置文件 *conf/ubuntu12.04.conf* 覆盖到 *conf/colinux.conf*
+ 2. 将配置文件 *conf/ubuntu-12.04.conf* 覆盖到 *conf/colinux.conf*
  3. 选择以下的两种启动方式其中一种运行程序
  4. tty登录或者ssh登录
 
-具体内容请参考文档 *image-ubuntu12.04.org* 
+具体内容请参考文档 *image-ubuntu-12.04.org* 
 
 （注：安装目录不要使用中文名称，否则无法找到镜像文件）
 
