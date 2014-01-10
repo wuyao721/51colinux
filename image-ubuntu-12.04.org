@@ -3,7 +3,7 @@
 * ubuntu 12.04 image
 I download this image from the [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux project]] , and optimize it.
 
-The image file size more than 4G, so it can use in fatext or ntfs filesystem, no fat32 filesystem.
+The image file size more than 4G, so it can use in exfat or ntfs filesystem, no fat32 filesystem.
 
 Default root password: *51colinux*
 
