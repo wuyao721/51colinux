@@ -7,9 +7,11 @@
 
 root默认密码为： *51colinux*
 
-支持系统：
- - Windows XP
+支持操作系统：
+ - Windows XP 32bit
+ - Windows 7 32bit
 
+其它的系统没有测试过。
 
 * 镜像特性
 本镜像特性包括：
