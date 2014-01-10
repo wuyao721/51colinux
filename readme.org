@@ -1,6 +1,6 @@
 #+OPTIONS: toc:nil ^:nil
 
-* 51colinux
+* 关于51colinux
 引用自百度百科对colinux的介绍：
  *CoLinux（Cooperative Linux 的缩写）是第一种免费使用和开源的解决方案，它让Linux更好的运行在Microsoft Windows 本机系统下。通常的， colinux是Linux内核使自己友好的和其它操作系统共同运行在一台机器上的一条通道。例如，我们不需要第三方的商业虚拟机软件（例如vmware）就可以自由的在windows 2000/xp/vista/7上运行Linux，这是不使用虚拟机软件的最佳方式。*
 
