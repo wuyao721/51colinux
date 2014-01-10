@@ -1,86 +1,84 @@
 #+OPTIONS: toc:nil ^:nil
 
-* ubuntu12.04镜像
-本镜像来自于 [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux官网]] ，并对其进行裁剪、优化、修复。
+* ubuntu 12.04 image
+I download this image from the [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux project]] , and optimize it.
 
-镜像文件超过4G（超过一点点），所以不支持FAT32的文件系统，支持fatext或ntfs文件系统。
+The image file size more than 4G, so it can use in fatext or ntfs filesystem, no fat32 filesystem.
 
-root默认密码为： *51colinux*
+Default root password: *51colinux*
 
 
-* 镜像特性
-本镜像特性包括：
- 1. 去除桌面环境
- 2. 软件包更新到最新（至2014.1.8）
- 3. 通用的使用环境设置
- 4. upstart优化（禁用一些无用的服务，4级runlevel）
- 5. 修复若干个BUG
- 6. 安装常用工具
- 7. 与宿主系统共享目录
+* image features
+image include features: 
+ 1. remove desktop
+ 2. upgrade all software to newest(to 2014.1.8)
+ 3. common environment 
+ 4. upstart optimize
+ 5. fix bugs
+ 6. install some common software
+ 7. share directory with host os
 
-具体实现请看下面详情。
+more detail information below.
 
-** 去除桌面环境
-既然选择了windows+colinux，那么linux桌面就显得无关紧要了。卸载有多个好处：
- 1. 节省空间，至少300M
- 2. 系统更稳定
- 3. 部署方便（windows不用装XMing）
+** remove desktop
+Since we choose windows plus colinux, so no linux desktop have more benefits: 
+ 1. free space more than 300M
+ 2. without desktop linux os more stable
+ 3. easier deployment（no XMing for X window）
 
-卸载的软件包有Gnome、Kde、Gtk、Qt、Xorg、Xlib等等，通过手工卸载，类似这样：
+I remove packages like Gnome, Kde, Gtk, Qt, Xorg, Xlib and more handy using these commands：
 : root@51colinux:~# dpkg -l|grep gnome
 : root@51colinux:~# apt-get purge *gnome*
 
 
-** 软件包更新到最新
+** upgrade all software to newest
 : root@51colinux:~# apt-get update
 : root@51colinux:~# apt-get upgrade
 
 
-** 通用的环境设置
-官网镜像问题好多。
+** common environment 
+There is a number of problems of the origin ubuntu image.
 
-首先是tty键盘布局，有点奇怪，z和y调过来，还有很多都乱了。重新设置一下就好了：
+First, the keyboard layout is de, i reset it: 
 : root@51colinux:~# dpkg-reconfigure keyboard-configuration
 
-然后就是语言包，去除默认的语言de，支持中文UTF：
+Second, support chinese utf-8: 
 : root@51colinux:~# locale-gen --purge zh_CN.UTF-8 en_US.UTF-8
 
-然后就是语言环境，选用 *en_US.UTF-8* ，比较通用。
+Last, choose *en_US.UTF-8* as default language:
 : root@51colinux:~# cat /etc/default/locale
 : LANG="en_US.UTF-8"
 : LANGUAGE="en_US:en"
 
-使用上海时区：
+Use shanghai as default time zone:
 : cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 
-** upstart优化
-设置runlevel为4，修改文件 */etc/inittab* 即可。
+** upstart optimize
+Set runlevel4, it is quicker than runlevle2 in ubuntu 12.04 because only tty1 in runlevel4. By modify file */etc/inittab* .
 
 
-** 修复若干个BUG
-发现的bug有：
- - 重启后文件 */dev/ptmx* 丢失
- - 无法在 */etc/fstab* 加载 windows文件系统，得手工加载
+** fix bugs
+bugs include:
+ - File */dev/ptmx* disappear when reboot guest os
+ - Can not mount cofs through */etc/fstab*
 
-修复脚本写在 */etc/rc.local* 开机启动脚本里。
+Fix script is written in file */etc/rc.local* . 
 
 
-** 安装常用工具
-安装的软件包包括：
+** install some common software
  - emacs23-nox, vim
  - apt-file
- - gcc, g++, make, subverion, git等开发工具
+ - gcc, g++, make, subverion, git 
  - nmap
- - unrar, unzip （windows常见的压缩方式）
+ - unrar, unzip (windows's common compress format )
 
 
-** 与宿主系统共享目录
-共享目录在宿主系统里是安装目录下的 *share* ；在镜像系统下的是 */root/windows* ，它是 */mnt/win* 的软连接。
+** share directory with host os
+The share directory is *share* In the host os. In the guest, the share directory is */root/windows* which is a soft link tothe file */mnt/win* .
 
 
-** 修改文件列表
-修改过的文件列表：
+* change file list
  - /etc/hostname
  - /etc/hosts
  - /etc/network/interfaces

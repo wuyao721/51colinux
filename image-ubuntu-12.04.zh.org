@@ -1,0 +1,91 @@
+#+OPTIONS: toc:nil ^:nil
+
+* ubuntu 12.04镜像
+本镜像来自于 [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux官网]] ，并对其进行裁剪、优化、修复。
+
+镜像文件超过4G（超过一点点），所以不支持FAT32的文件系统，支持fatext或ntfs文件系统。
+
+root默认密码为： *51colinux*
+
+
+* 镜像特性
+本镜像特性包括：
+ 1. 去除桌面环境
+ 2. 软件包更新到最新（至2014.1.8）
+ 3. 通用的使用环境设置
+ 4. upstart优化（禁用一些无用的服务，4级runlevel）
+ 5. 修复bugs
+ 6. 安装常用工具
+ 7. 与宿主系统共享目录
+
+具体实现请看下面详情。
+
+** 去除桌面环境
+既然选择了windows+colinux，那么linux桌面就显得无关紧要了。卸载有多个好处：
+ 1. 节省空间，至少300M
+ 2. 系统更稳定
+ 3. 部署方便（windows不用装XMing）
+
+卸载的软件包有Gnome、Kde、Gtk、Qt、Xorg、Xlib等等，通过手工卸载，类似这样：
+: root@51colinux:~# dpkg -l|grep gnome
+: root@51colinux:~# apt-get purge *gnome*
+
+
+** 软件包更新到最新
+: root@51colinux:~# apt-get update
+: root@51colinux:~# apt-get upgrade
+
+
+** 通用的环境设置
+官网镜像问题好多。
+
+首先是tty键盘布局，有点奇怪，z和y调过来，还有很多都乱了。重新设置一下就好了：
+: root@51colinux:~# dpkg-reconfigure keyboard-configuration
+
+然后就是语言包，去除默认的语言de，支持中文UTF：
+: root@51colinux:~# locale-gen --purge zh_CN.UTF-8 en_US.UTF-8
+
+然后就是语言环境，选用 *en_US.UTF-8* ，比较通用。
+: root@51colinux:~# cat /etc/default/locale
+: LANG="en_US.UTF-8"
+: LANGUAGE="en_US:en"
+
+使用上海时区：
+: cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+
+** upstart优化
+设置runlevel为4，修改文件 */etc/inittab* 即可。
+
+
+** 修复bugs
+发现的bug有：
+ - 重启后文件 */dev/ptmx* 丢失
+ - 无法在 */etc/fstab* 加载 windows文件系统，得手工加载
+
+修复脚本写在 */etc/rc.local* 开机启动脚本里。
+
+
+** 安装常用工具
+安装的软件包包括：
+ - emacs23-nox, vim
+ - apt-file
+ - gcc, g++, make, subverion, git等开发工具
+ - nmap
+ - unrar, unzip （windows常见的压缩方式）
+
+
+** 与宿主系统共享目录
+共享目录在宿主系统里是安装目录下的 *share* ；在镜像系统下的是 */root/windows* ，它是 */mnt/win* 的软连接。
+
+
+** 修改文件列表
+修改过的文件列表：
+ - /etc/hostname
+ - /etc/hosts
+ - /etc/network/interfaces
+ - /etc/rc.local
+ - /etc/inittab
+ - /etc/default/locale
+ - /etc/issue
+

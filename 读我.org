@@ -1,0 +1,67 @@
+#+OPTIONS: toc:nil ^:nil
+
+* 关于51colinux
+引用自百度百科对colinux的介绍：
+
+ *CoLinux（Cooperative Linux 的缩写）是第一种免费使用和开源的解决方案，它让Linux更好的运行在Microsoft Windows 本机系统下。通常的， colinux是Linux内核使自己友好的和其它操作系统共同运行在一台机器上的一条通道。例如，我们不需要第三方的商业虚拟机软件（例如vmware）就可以自由的在windows 2000/xp/vista/7上运行Linux，这是不使用虚拟机软件的最佳方式。*
+
+51colinux其实就是一个配置好了的colinux，并加上一些方便有用的特性：
+ - 更易用
+ - 提供一个优化过的ubuntu 12.04镜像
+ - 提供无镜像启动配置 
+ - 无须安装，可移植的colinux
+ - 快速启动镜像（10秒以内）
+ - 两种启动方式：
+   1. 服务方式启动，开机运行
+   2. 应用方式启动， *最小化到托盘*
+
+测试并可用的操作系统：
+ - Windows XP 32bit
+ - Windows 7 32bit
+
+
+项目地址在 [[https://github.com/wuyao721/51colinux][这里]] ，本项目不包括镜像文件。
+
+对于github来说，镜像文件太大，所以您可以在 [[http://pan.baidu.com/share/link?shareid=902233466&uk=101040102][这里]] 下载整个51colinux（包括一个ubuntu 12.04镜像）。目前放在百度上面。
+
+
+* 使用简介
+
+** 无镜像启动
+无镜像启动就是没有操作系统，只有一个linux内核以及自带超简单的shell。使用顺序如下：
+ 1. download the project
+ 2. 将配置文件 *conf/noimage.conf* 覆盖到 *conf/colinux.conf*
+ 3. 双击 *run_portable_colinux.bat* 启动 colinux，程序默认最小化到托盘
+ 
+
+** ubuntu12.04镜像启动
+
+本项目目前只提供 ubuntu12.04镜像， 使用顺序如下：
+ 1. 下载ubuntu 12.04 镜像文件 *ubuntu-12.04.vdi* 到 *images* 目录下
+ 2. 将配置文件 *conf/ubuntu-12.04.conf* 覆盖到 *conf/colinux.conf*
+ 3. 选择以下的两种启动方式其中一种运行程序
+ 4. tty登录或者ssh登录
+
+具体内容请参考文档 *image-ubuntu-12.04* 
+
+（注：安装目录不要使用中文名称，否则无法找到镜像文件）
+
+
+* 启动方式简介
+
+** 服务方式启动
+双击 *colinux-install-service.bat* 安装服务，服务安装后设置开机运行即可。
+
+服务运行后，只能通过ssh登录linux镜像系统。
+
+双击 *colinux-remove-service.bat* 卸载服务。
+
+（注：使用 *noimage.conf* 配置文件不要使用服务启动，因为没有提供sshd服务，无法登录。）
+
+
+** 应用方式启动
+双击 *run_portable_colinux.bat* 启动colinux。
+
+应用程序会最小化到右下角托盘位置，鼠标左键点击应用程序图标可还原应用程序窗口。
+
+可通过应用窗口登录系统，可以通过ssh登录。
