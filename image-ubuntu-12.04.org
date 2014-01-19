@@ -3,30 +3,60 @@
 * ubuntu 12.04 image
 I download this image from the [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux project]] , and optimize it.
 
-The image file size more than 4G, so it can use in exfat or ntfs filesystem, no fat32 filesystem.
-
 Default root password: *51colinux*
 
 
 * image features
 image include features: 
- 1. remove desktop
- 2. upgrade all software to newest(to 2014.1.8)
- 3. common environment 
- 4. upstart optimize
- 5. fix bugs
- 6. install some common software
- 7. share directory with host os
+ - ext4 format image with size no more than 4G
+ - remove desktop
+ - upgrade all software to newest(to 2014.1.8)
+ - common environment 
+ - upstart optimize
+ - fix bugs
+ - install some common software
+ - share directory with host os
 
 more detail information below.
+
+** ext4 format image with size no more than 4G
+The image downloaded from colinux large than 4G, so not support for windows FAT32 filesystem.
+so I make a image smaller than 4G from the image downloaded.
+
+Changing image format from ext3 to ext4 will be better.
+
+First, create a file no more than 4G.
+: fsutil file createnew new.vdi 4000000000
+
+Then, copy *ubuntu-12.04.vdi* to *old.vdi* for the new image.
+
+Modify colinux configure.
+: cobd0="images\ubuntu-12.04.vdi"
+: cobd1="images\old.vdi"
+: cobd2="images\new.vdi"
+
+Now run colinux and format the device in ubuntu.
+: mkfs.ext4 /dev/cobd2
+
+Mount both block device.
+: mkdir 1
+: mkdir 2
+: mount /dev/cobd2 2
+: mount /dev/cobd1 1
+
+Because cobd2 is smaller than cobd1, wo can not use command dd to copy device. Use cp to copy files.
+: cp -a 1/* 2
+
+Last, modify colinux configure and reboot colinux.
+
 
 ** remove desktop
 Since we choose windows plus colinux, so no linux desktop have more benefits: 
  1. free space more than 300M
  2. without desktop linux os more stable
- 3. easier deployment（no XMing for X window）
+ 3. easier deployment (no XMing for X window)
 
-I remove packages like Gnome, Kde, Gtk, Qt, Xorg, Xlib and more handy using these commands：
+I remove packages like Gnome, Kde, Gtk, Qt, Xorg, Xlib and more. handy using these commands:
 : root@51colinux:~# dpkg -l|grep gnome
 : root@51colinux:~# apt-get purge *gnome*
 
@@ -86,4 +116,5 @@ The share directory is *share* In the host os. In the guest, the share directory
  - /etc/inittab
  - /etc/default/locale
  - /etc/issue
+ - /etc/fstab
 

@@ -3,22 +3,51 @@
 * ubuntu 12.04镜像
 本镜像来自于 [[http://sourceforge.net/projects/colinux/files/Images%202.6.x%20Ubuntu/Ubuntu%2012.04/][colinux官网]] ，并对其进行裁剪、优化、修复。
 
-镜像文件超过4G（超过一点点），所以不支持FAT32的文件系统，支持exfat或ntfs文件系统。
-
 root默认密码为： *51colinux*
 
 
 * 镜像特性
 本镜像特性包括：
- 1. 去除桌面环境
- 2. 软件包更新到最新（至2014.1.8）
- 3. 通用的使用环境设置
- 4. upstart优化（禁用一些无用的服务，4级runlevel）
- 5. 修复bugs
- 6. 安装常用工具
- 7. 与宿主系统共享目录
+ - 小于4G的ext4格式的镜像文件
+ - 去除桌面环境
+ - 软件包更新到最新（至2014.1.8）
+ - 通用的使用环境设置
+ - upstart优化（禁用一些无用的服务，4级runlevel）
+ - 修复bugs
+ - 安装常用工具
+ - 与宿主系统共享目录
 
 具体实现请看下面详情。
+
+** 小于4G的ext4文件系统
+下载下来的镜像文件比4G大一点点，我的windows分区是FAT32格式，放不下了，所以必须给他裁剪一下。
+
+默认的文件系统格式是ext3，换成ext4可能会更好。
+
+首先在windows下制作一个小于4G的文件：
+: fsutil file createnew new.vdi 4000000000
+
+将ubuntu-12.04.vdi复制一个副本 *old.vdi* ，用来制作新的镜像文件。
+
+修改colinux配置文件：
+: cobd0="images\ubuntu-12.04.vdi"
+: cobd1="images\old.vdi"
+: cobd2="images\new.vdi"
+
+现在启动colinux，然后将刚刚那个文件格式化为ext4格式：
+: mkfs.ext4 /dev/cobd2
+
+加载两个文件系统：
+: mkdir 1
+: mkdir 2
+: mount /dev/cobd2 2
+: mount /dev/cobd1 1
+
+由于cobd2比cobd1小，所以不能用dd命令来复制分区。得用cp复制文件：
+: cp -a 1/* 2
+
+最后，修改配置，然后重启colinux。
+
 
 ** 去除桌面环境
 既然选择了windows+colinux，那么linux桌面就显得无关紧要了。卸载有多个好处：
@@ -88,4 +117,16 @@ root默认密码为： *51colinux*
  - /etc/inittab
  - /etc/default/locale
  - /etc/issue
+
+
+
+* 修改文件列表
+ - /etc/hostname
+ - /etc/hosts
+ - /etc/network/interfaces
+ - /etc/rc.local
+ - /etc/inittab
+ - /etc/default/locale
+ - /etc/issue
+ - /etc/fstab
 
