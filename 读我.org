@@ -22,7 +22,7 @@
 
 项目地址在 [[https://github.com/wuyao721/51colinux][这里]] ，本项目不包括镜像文件。
 
-对于github来说，镜像文件太大，所以您可以在 [[http://pan.baidu.com/share/link?shareid=902233466&uk=101040102][这里]] 下载整个51colinux（包括一个ubuntu 12.04镜像）。目前放在百度上面。
+对于github来说，镜像文件太大，所以您可以在 [[http://pan.baidu.com/s/1pKgKwTP][这里]] 下载整个51colinux（包括一个ubuntu 12.04镜像）。目前放在百度上面。
 
 
 * 使用简介

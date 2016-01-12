@@ -18,7 +18,7 @@ Tested support OS:
 
 Project address is [[https://github.com/wuyao721/51colinux][here]] without os image. 
 
-The os image is too large for github. You can download the whole 51colinux [[http://pan.baidu.com/share/link?shareid=902233466&uk=101040102][here]] with a optimize ubuntu 12.04 image. 
+The os image is too large for github. You can download the whole 51colinux [[http://pan.baidu.com/s/1pKgKwTP][here]] with a optimize ubuntu 12.04 image. 
 
 
 * Usage
